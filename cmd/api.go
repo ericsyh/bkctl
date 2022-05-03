@@ -9,6 +9,8 @@ import (
 
 var bklist map[string]string
 
+var lglist map[string]string
+
 type BookieInfo struct {
 	FreeSpace  int64 `json:"freeSpace"`
 	TotalSpace int64 `json:"totalSpace"`
@@ -40,6 +42,16 @@ func diskfile(url string) []byte {
 
 func bookielist(url string) []byte {
 	resp, err := http.Get("http://" + url + "/api/v1/bookie/list_bookies")
+	if err != nil {
+		fmt.Println("Error:", err)
+		os.Exit(1)
+	}
+	body, err := ioutil.ReadAll(resp.Body)
+	return body
+}
+
+func ledgerlist(url string) []byte {
+	resp, err := http.Get("http://" + url + "/api/v1/ledger/list")
 	if err != nil {
 		fmt.Println("Error:", err)
 		os.Exit(1)

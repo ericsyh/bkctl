@@ -13,7 +13,7 @@ import (
 )
 
 // listCmd represents the list command
-var bklistCmd = &cobra.Command{
+var ledgerlistCmd = &cobra.Command{
 	Use:   "list",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
@@ -28,10 +28,10 @@ to quickly create a Cobra application.`,
 			fmt.Println("Error:", err)
 		}
 		if endpoint != "" {
-			bk := bookielist(endpoint)
-			json.Unmarshal(bk, &bklist)
-			for i, _ := range bklist {
-				fmt.Printf("Bookie Address is %s\n", i)
+			ledger := ledgerlist(endpoint)
+			json.Unmarshal(ledger, &lglist)
+			for i, _ := range lglist {
+				fmt.Printf("Ledger Id is %s\n", i)
 			}
 		} else {
 			fmt.Println("Plesase Input the bookie Endpoint address")
@@ -41,7 +41,7 @@ to quickly create a Cobra application.`,
 }
 
 func init() {
-	bookieCmd.AddCommand(bklistCmd)
+	ledgerCmd.AddCommand(ledgerlistCmd)
 
 	// Here you will define your flags and configuration settings.
 
