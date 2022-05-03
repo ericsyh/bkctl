@@ -5,7 +5,9 @@ Copyright © 2022 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"encoding/json"
 	"fmt"
+	"os"
 
 	"github.com/spf13/cobra"
 )
@@ -27,7 +29,30 @@ to quickly create a Cobra application.`,
 			if err != nil {
 				fmt.Println("Error:", err)
 			}
-			fmt.Println(id)
+			endpoint, err := cmd.Flags().GetString("endpoint")
+			if err != nil {
+				fmt.Println("Error:", err)
+			}
+			if endpoint != "" {
+				ledger := ledgermeta(endpoint, id)
+				var lgmeta LedgerMeta
+				json.Unmarshal(ledger, &lgmeta)
+				fmt.Printf("LedgerID is %v\n", lgmeta.ID.LedgerID)
+				fmt.Printf("MetadataFormatVersion  is %v\n", lgmeta.ID.MetadataFormatVersion)
+				fmt.Printf("EnsembleSize is %v\n", lgmeta.ID.EnsembleSize)
+				fmt.Printf("WriteQuorumSize is %v\n", lgmeta.ID.WriteQuorumSize)
+				fmt.Printf("AckQuorumSize is %v\n", lgmeta.ID.AckQuorumSize)
+				fmt.Printf("State is %v\n", lgmeta.ID.State)
+				fmt.Printf("Length is %v\n", lgmeta.ID.Length)
+				fmt.Printf("LastEntryID is %v\n", lgmeta.ID.LastEntryID)
+				fmt.Printf("Create Time is %v\n", lgmeta.ID.Ctime)
+				for i := range lgmeta.ID.AllEnsembles.EnsembleId {
+					fmt.Printf("EnsembleId is %s\n", lgmeta.ID.AllEnsembles.EnsembleId[i])
+				}
+			} else {
+				fmt.Println("Plesase Input the bookie Endpoint address")
+				os.Exit(1)
+			}
 		},
 	}
 )
