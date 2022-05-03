@@ -45,7 +45,7 @@ to quickly create a Cobra application.`,
 				fmt.Printf("State is %v\n", lgmeta.ID.State)
 				fmt.Printf("Length is %v\n", lgmeta.ID.Length)
 				fmt.Printf("LastEntryID is %v\n", lgmeta.ID.LastEntryID)
-				fmt.Printf("Create Time is %v\n", lgmeta.ID.Ctime)
+				fmt.Printf("Create Time is %v\n", UnixToTime(lgmeta.ID.Ctime))
 				for i := range lgmeta.ID.AllEnsembles.EnsembleId {
 					fmt.Printf("EnsembleId is %s\n", lgmeta.ID.AllEnsembles.EnsembleId[i])
 				}
