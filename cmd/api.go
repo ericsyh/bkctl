@@ -95,6 +95,10 @@ func ledgermeta(url string, id int) []byte {
 		fmt.Println("Error:", err)
 		os.Exit(1)
 	}
+	if resp.StatusCode != 200 {
+		fmt.Println("Bookie endpoint doesn't own this Ledger Id")
+		os.Exit(1)
+	}
 	body, err := ioutil.ReadAll(resp.Body)
 	return body
 }
